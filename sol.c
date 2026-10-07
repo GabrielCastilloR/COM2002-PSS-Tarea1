@@ -66,7 +66,7 @@ int contarOcurrencias(char* target, int targetLen){
 int main(int argc, char* argv[]){
     int run = controlArgumentos(argc, argv);
     if (run == 3){
-        return translate(argv[1][0], argv[2][0]);
+        return traducir(argv[1][0], argv[2][0]);
     }if (run == 2){
         return contarOcurrencias(argv[1], strlen(argv[1]));
     }
