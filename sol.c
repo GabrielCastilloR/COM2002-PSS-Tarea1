@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Funcion auixiliar para el manejo de errores de argumentos y control de flujo del programa
 int controlArgumentos(int argc, char* argv[]){
     if (argc == 2){
         return 2;
@@ -16,48 +17,51 @@ int controlArgumentos(int argc, char* argv[]){
     }
 }
 
-int translate(char target, char new){
+// Inicio desarrollo de la funcion pedida en el ejercicio 1
+int traducir(char target, char new){
     int currentCH = getchar();
-    while (currentCH != EOF){
+    while (currentCH != EOF){ // Itera caracter a caracter hasta encontrar el delimitador EOF
         if (currentCH == target){
             fprintf(stdout, "%c", new);
         }else{
             fprintf(stdout, "%c", currentCH);
         }
-        currentCH = getchar();
+        currentCH = getchar();// Actualiza currentCH
     }
-    fflush(stdout);
+    fflush(stdout);//Imprime toda la cola de fprintf retenidos a stdout
     return 0;
 }
+// Fin del desarrollo
 
+// Inicio desarrollo de la funcion pedida en el ejercicio 2
 int contarOcurrencias(char* target, int targetLen){
     int ocurrencias = 0;
-    char line[1024];
+    char line[1024]; // Se fijo un tamaño maximo por conveniencia de 1024
 
-    while (fgets(line, sizeof(line), stdin) != NULL){
+    while (fgets(line, sizeof(line), stdin) != NULL){// Itera linea a linea hasta llegar al delimitador EOF.
         int lineLen = strlen(line);
-        if (targetLen > lineLen) continue;
+        if (targetLen > lineLen) continue; // Si la linea es mas corta que la palabra no puede haber una ocurrencia, la linea se salta.
         
-        int inLine = 0;
-        for (int i = 0; i <= lineLen - targetLen; i++){
-            int isMatch = 1;
-            for (int j = 0; j < targetLen; j++){
-                if (target[j] != line[i+j]){
+        int inLine = 0; // bool para verificar que haya al menos una ocurrencia de la palabra en la linea, se asume inicialmente que no.
+        for (int i = 0; i <= lineLen - targetLen; i++){//Itera sobre la linea, hasta el ultimo indice capaz de producir una ocurrencia.
+            int isMatch = 1; // bool para verificar coincidencia de la palabra con el substring en la linea, se asume inicialmente verdadero
+            for (int j = 0; j < targetLen; j++){// Itera sobre el substring
+                if (target[j] != line[i+j]){ // Si no hay coincidencia, fija isMatch a 0 y termina la iteracion sobre el substring.
                     isMatch = 0;
                     break;
                 }
             }
-            if (isMatch == 1){
-                inLine = 1;
+            if (isMatch == 1){ // Verificacion de ocurrencia, si hay una ocurrencia, no sigue buscando en la linea.
                 break;
             }
         }
-        if (inLine == 1) ocurrencias++;
+        if (inLine == 1) ocurrencias++; // Cuenta la ocurrencia
     }
     fprintf(stdout, "%d\n", ocurrencias);
     fflush(stdout);
     return 0;
 }
+// Fin desarrollo
 
 int main(int argc, char* argv[]){
     int run = controlArgumentos(argc, argv);
