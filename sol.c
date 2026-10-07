@@ -52,6 +52,7 @@ int contarOcurrencias(char* target, int targetLen){
                 }
             }
             if (isMatch == 1){ // Verificacion de ocurrencia, si hay una ocurrencia, no sigue buscando en la linea.
+                inLine = 1;
                 break;
             }
         }
